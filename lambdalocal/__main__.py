@@ -13,7 +13,7 @@ parser.add_argument('-e', '--event-path', help='Specify event data file name', r
 parser.add_argument('-hh', '--handler', help='Lambda function handler name. Default is "handler"', default='handler')
 parser.add_argument('-p', '--profile', help='Read the AWS profile of the file', default='default')
 parser.add_argument('-r', '--region', help='Sets the AWS region, defaults to us-east-1', default='us-east-1')
-parser.add_argument('-t', '--timeout', help='Seconds until lambda function timeout. Default is 3 seconds', default=3)
+parser.add_argument('-t', '--timeout', help='Seconds until lambda function timeout. Default is 3 seconds', type=int, default=3)
 args = parser.parse_args()
 
 
@@ -41,18 +41,17 @@ def load_module():
 def timeout(timeout, request_id):
     def decorator(func):
         def wrapper(*args, **kwargs):
-            res = Exception(f'{datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]}Z {request_id} Task timed out after {timeout}.00 seconds')
+            res = None
             def run():
-                try:
-                    res = func(*args, **kwargs)
-                except Exception as e:
-                    res = e
+                return func(*args, **kwargs)
             t = Thread(target=run)
             t.daemon = True
 
             try:
                 t.start()
-                t.join(timeout)
+                res = t.join(timeout)
+                if t.is_alive():
+                    print(Exception(f'{datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]}Z {request_id} Task timed out after {timeout}.00 seconds'))
             except Exception as e:
                 print ('error starting thread')
                 raise e
