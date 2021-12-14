@@ -92,9 +92,11 @@ def __call_lambda(timeout, ctx):
 
 try:
     import os
+    from dotenv import load_dotenv
 
     os.environ["AWS_PROFILE"] = args.profile
     os.environ["AWS_DEFAULT_REGION"] = args.region
+    load_dotenv()
 
     event, module, context = __load_event(), __load_module(), __cxt_lambda()
     def run():
