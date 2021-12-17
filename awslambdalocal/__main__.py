@@ -9,7 +9,6 @@ parser.add_argument('event_path', help='Specify event data file name.')
 parser.add_argument('-p', '--profile', help='Read the AWS profile of the file', default='default')
 parser.add_argument('-r', '--region', help='Sets the AWS region, defaults to us-east-1', default='us-east-1')
 parser.add_argument('-h', '--handler', help='Lambda function handler name. Default is "lambda_handler"', default='lambda_handler')
-parser.add_argument('-t', '--timeout', help='Seconds until lambda function timeout. Default is 3 seconds', type=int, default=3)
 args = parser.parse_args()
 
 
@@ -61,37 +60,38 @@ def __cxt_lambda():
     return obj(ctx)
 
 
-def __call_lambda(timeout, ctx):
-    def decorator(func):
-        def wrapper(*args, **kwargs):
-            from time import time
-            from threading import Thread
+# def __call_lambda(timeout, ctx):
+#     def decorator(func):
+#         def wrapper(*args, **kwargs):
+#             from time import time
+#             from threading import Thread
 
-            def run():
-                return func(*args, **kwargs)
+#             def run():
+#                 return func(*args, **kwargs)
 
-            t = Thread(target=run)
-            t.daemon = True
+#             t = Thread(target=run)
+#             t.daemon = True
 
-            start_time = time()
-            print(f'START RequestId: {ctx.aws_request_id} Version: $LATEST')
+#             start_time = time()
+#             print(f'START RequestId: {ctx.aws_request_id} Version: $LATEST')
 
-            t.start()
-            res = t.join(timeout)
-            print(res)
+#             t.start()
+#             res = t.join(timeout)
+#             print(res)
 
-            end_time = time() * 1000 - start_time * 1000
-            print(f'END RequestId: {ctx.aws_request_id}')
-            print('REPORT RequestId: {}   Duration: {:0.2f} ms    Billed Duration: {:0.0f} ms Memory Size: --- MB Max Memory Used: --- MB'.format(ctx.aws_request_id, end_time, end_time))
+#             end_time = time() * 1000 - start_time * 1000
+#             print(f'END RequestId: {ctx.aws_request_id}')
+#             print('REPORT RequestId: {}   Duration: {:0.2f} ms    Billed Duration: {:0.0f} ms Memory Size: --- MB Max Memory Used: --- MB'.format(ctx.aws_request_id, end_time, end_time))
 
-            if t.is_alive():
-                print(Exception(f'{datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]}Z {ctx.aws_request_id} Task timed out after {timeout}.00 seconds'))
-        return wrapper
-    return decorator
+#             if t.is_alive():
+#                 print(Exception(f'{datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]}Z {ctx.aws_request_id} Task timed out after {timeout}.00 seconds'))
+#         return wrapper
+#     return decorator
 
 
 try:
     import os
+    from time import time
     from dotenv import load_dotenv
 
     os.environ["AWS_PROFILE"] = args.profile
@@ -99,11 +99,13 @@ try:
     load_dotenv()
 
     event, module, context = __load_event(), __load_module(), __cxt_lambda()
-    def run():
-        module(event, context)
-
-    handler = __call_lambda(timeout=args.timeout, ctx=context)(run)
-    handler()
+    
+    start_time = time()
+    print(f'START RequestId: {context.aws_request_id} Version: $LATEST')
+    print(module(event, context))
+    end_time = time() * 1000 - start_time * 1000
+    print(f'END RequestId: {context.aws_request_id}')
+    print('REPORT RequestId: {}   Duration: {:0.2f} ms    Billed Duration: {:0.0f} ms Memory Size: --- MB Max Memory Used: --- MB'.format(context.aws_request_id, end_time, end_time))
 
 except Exception as e:
     raise e

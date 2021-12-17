@@ -1,5 +1,5 @@
 # py-lambda-local
-lambdalocal is a tool to simulate running an AWS Lambda locally, for lambda functions in Python.
+awslambdalocal is a tool to simulate running an AWS Lambda locally, for lambda functions in Python.
 
 
 ## Table of Contents
@@ -22,11 +22,10 @@ lambdalocal is a tool to simulate running an AWS Lambda locally, for lambda func
 
 ## Install
 
-To install lambdalocal, we recommend adding it to your pyproject.toml in the dev-dependencies section as shown in the example below.
+To install awslambdalocal, we recommend adding it to your pyproject.toml in the dev-dependencies section as shown in the example below.
 
-```toml
-[tool.poetry.dev-dependencies]
-lambdalocal = { git = "https://github.com/miqueiasbrs/py-lambda-local.git", branch = "master" }
+```bash
+pip install awslambdalocal
 ```
 **Obs.:** We recommend using Poetry. See https://python-poetry.org/docs/ 
 
@@ -44,7 +43,6 @@ lambdalocal = { git = "https://github.com/miqueiasbrs/py-lambda-local.git", bran
 |-------------|-------------------------------------------------------------|
 | --help      | Show this help message and exit                             |
 | -h          | Lambda function handler name. Default is "lambda_handler"   |
-| -t          | Seconds until lambda function timeout. Default is 3 seconds |
 | -p          | Read the AWS profile of the file.                           |
 | -r          | Sets the AWS region, defaults to us-east-1.                 |
 
@@ -52,10 +50,10 @@ lambdalocal = { git = "https://github.com/miqueiasbrs/py-lambda-local.git", bran
 ### CLI Examples
 ```sh
 # Simple usage
-pyhton -m lambdalocal main.py test-event.json
+pyhton -m awslambdalocal main.py test-event.json
 
 # Input all arguments
-pyhton -m lambdalocal main.py test-event.json -p my_profile -r my_region -h lambda_handler -t 30
+pyhton -m awslambdalocal main.py test-event.json -p my_profile -r my_region -h lambda_handler -t 30
 ```
 
 
@@ -64,7 +62,7 @@ pyhton -m lambdalocal main.py test-event.json -p my_profile -r my_region -h lamb
 This session contains a collection of tutorials.
 
 ### Debug Python in VSCode
-To use vscode debug with lambdalocal follow the steps below
+To use vscode debug with awslambdalocal follow the steps below
 
 1. Click run and debug
 2. Click create a launch.json file
@@ -81,7 +79,7 @@ To use vscode debug with lambdalocal follow the steps below
 
     ![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQEAAAAtCAYAAACu9d4EAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASnSURBVHhe7Zy/axtJFMfvL3GXa+0iYGKIoiuCMViFuw3mSIQbHcLECNv4OC5CIZAE1o0PkuaKK1wFjjiYXOPCMdzhwn/Uu5nZ2Z03P9aRlPVE0nyLD2jfm9lZF+8zb0e2f7h370cCAKTB0tKSByQAQEJAAgAkDiTg0aFBPqBOMAfA4gEJeEACIC0alcDy6n1aDsQNK3R/dSUQnyUgAZAWDUrgCZ2cf6Gz450aEazQzsk/9OVTTlkwz1mj7jCnQYfF1ro0HHbpgfj84NmQ8jwv2OuYMZ2BibNCtsbnQ+qu6fGazl6Zk2s6EpDrVnMhB7B4NCgBwfIOvf8cEkEhgAshgJ1lHq9HFS4rcHk9fLZWFLqWAR9fCIAXfrf47MSLonYEwdYphFDmpRCYNOrWBmCOaVYCEk8EQgDHZxMJQMF2/qIz0MXoFHGJLF6rc1AEOgqBGesUucJ0Aq4g8KoAFpHmJSARIjg5vxAi+IV60whAwQpf7sDBtr8sSDa2ml8fr7qKYFE7EqheBUpC6wAwv9yNBCRKBP+pM4DJBVBQFmt4lxdU7Xl4x5+qE2CdhpEFywOwYNydBKbBbfXVK8GABgJ7t2Z5a9c248ozATfurqHOAOrOBNRY7PxgsZltCeidPPwq4LfmVvvODvCsuHV/iV5D571vB6z1BNYZAQDzz2xJAAAQHUgAgMSBBABIHEgAgMSBBABIHEgAgMQJSmB19SF9C1mWBeMAgNkDEgAgcSABABIHEgAgcSABABInqgQe91t0/Idgn8Wftujd+xa96LMYACAa8SSw36Krm5/o5qpNfzoSOP9XxEXulMeDbNNh/pJ6G6Hc3bLee0n5wXYwZ7HRp9F3ekYApiGeBN62RaG36a/nTlzyvBDEx7eBnMUcSACAOSOyBEShv3bikl8f0TUkAMB3IZ4E9OtAsNC1IE5/C+QsHAmo1tv8rf9hxuKjPq1X8zapNyrn6XtkbK5b3NmR+f8B+RFlIlZKIDso42w9jnqmYo685uNHvc1qHI+XaxS5MZ4PgAaJIwEhgPNL8d5/3aY3WyxestWij9cif9mmd7eeC9gSWO8dGSGowtXF9FUJiMKq8sV1VdD8PoL1Xt9IgI1T19YaGiaBuu7BmyvXdJ6n9vkAaJg4EtjVErh8RC9qJHAq8tcXk0nAz40rAfseclcud2n5OVRwXkE7O34wbhV3SehnGP/5AGiaOBKQ3Hb4V54XTHwmIK91y6yYTgKywIsi4+Ns/F1d3ucrEhCoed7O7s8z8rnt+UwMgKaIJwF9+PfhdyfOcpNJwC0WVlzfJIExOwG+HqemQzDz/fXHfz4TA6Ap4kmg6a8I3WKz3uXtQlIFWF3fXmTFWHNf60ygTgK87a+RAB+jDgW5pLwzAUgAxCOeBHb1Lwu5h39PW/RBnhdIQeyyeJBQcetXgYMjU5RObtTbnminte6ri1PFJpSAdR9HDEoEzhrmvpAAiEc8CQh+PmzR6d+OBLYe0qt8gX5t2HsVAWC2iSqBFPA7BgBmG0igIUzrHzgPAGCGgQQASBxIAIDEgQQASJygBEL/lhgAsJhAAgAkDiQAQOJAAgAkji+BJfofnO9DEy3n1gcAAAAASUVORK5CYII=)
 
-6. Copy and paste the json below into the launch.json file, this file aims to call the lambdalocal module and passes the necessary and optional parameters as arguments
+6. Copy and paste the json below into the launch.json file, this file aims to call the awslambdalocal module and passes the necessary and optional parameters as arguments
 
     ```json
     {
@@ -94,15 +92,13 @@ To use vscode debug with lambdalocal follow the steps below
                 "name": "Lambda Local",
                 "type": "python",
                 "request": "launch",
-                "module": "lambdalocal",
+                "module": "awslambdalocal",
                 "args": [
                     "file_python.py",
                     "your_test_event.json",
                     // Optional args ...
                     "-h",
                     "handler",
-                    "-t",
-                    "10",
                     "-p",
                     "your_profile",
                     "-r",
