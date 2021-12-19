@@ -60,35 +60,6 @@ def __cxt_lambda():
     return obj(ctx)
 
 
-# def __call_lambda(timeout, ctx):
-#     def decorator(func):
-#         def wrapper(*args, **kwargs):
-#             from time import time
-#             from threading import Thread
-
-#             def run():
-#                 return func(*args, **kwargs)
-
-#             t = Thread(target=run)
-#             t.daemon = True
-
-#             start_time = time()
-#             print(f'START RequestId: {ctx.aws_request_id} Version: $LATEST')
-
-#             t.start()
-#             res = t.join(timeout)
-#             print(res)
-
-#             end_time = time() * 1000 - start_time * 1000
-#             print(f'END RequestId: {ctx.aws_request_id}')
-#             print('REPORT RequestId: {}   Duration: {:0.2f} ms    Billed Duration: {:0.0f} ms Memory Size: --- MB Max Memory Used: --- MB'.format(ctx.aws_request_id, end_time, end_time))
-
-#             if t.is_alive():
-#                 print(Exception(f'{datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3]}Z {ctx.aws_request_id} Task timed out after {timeout}.00 seconds'))
-#         return wrapper
-#     return decorator
-
-
 try:
     import os
     from time import time
