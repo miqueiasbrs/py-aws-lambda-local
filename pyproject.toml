@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "awslambdalocal"
-version = "1.0.5"
+version = "1.0.6"
 description =  "A tool to simulate running an AWS Lambda locally"
 authors = ["Miqueias BRS <miqueias@capybaracode.com.br>"]
 readme = "README.md"
-license = "LICENSE"
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.8"
