@@ -69,12 +69,16 @@ To use vscode debug with awslambdalocal follow the steps below
 
     ![](https://github.com/miqueiasbrs/py-aws-lambda-local/raw/master/docs/step_1.png)
 3. Choose Python
+
     ![](https://github.com/miqueiasbrs/py-aws-lambda-local/raw/master/docs/step_2.png)
 4. Choose Module
+
     ![](https://github.com/miqueiasbrs/py-aws-lambda-local/raw/master/docs/step_3.png)
 5. Set the module name "awslambdalocal"
+
     ![](https://github.com/miqueiasbrs/py-aws-lambda-local/raw/master/docs/step_4.png)
 6. After this process, VSCode will create a file called launch.json in the .vscode folder located at the root of the project
+
     ![](https://github.com/miqueiasbrs/py-aws-lambda-local/raw/master/docs/step_5.png)
 6. Copy and paste the json below into the launch.json file, this file aims to call the awslambdalocal module and passes the necessary and optional parameters as arguments
 
