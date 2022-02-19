@@ -33,18 +33,20 @@ pip install awslambdalocal
 ## About: CLI
 
 ### Positional Arguments:
-| Argument    | Description                                                 |
-|-------------|-------------------------------------------------------------|
-| lambda_path | Specify Lambda function file name.                          |
-| event_path  | Specify event data file name.                               |
+| Argument    | Description                                                                  |
+|-------------|------------------------------------------------------------------------------|
+| file        | Specify Lambda function file name                                            |
 
 ### Optional Arguments:
-| Argument    | Description                                                 |
-|-------------|-------------------------------------------------------------|
-| --help      | Show this help message and exit                             |
-| -h          | Lambda function handler name. Default is "lambda_handler"   |
-| -p          | Read the AWS profile of the file.                           |
-| -r          | Sets the AWS region, defaults to us-east-1.                 |
+| Argument    | Description                                                                  |
+|-------------|------------------------------------------------------------------------------|
+| --help      | Show this help message and exit                                              |
+| -e          | Specify Event data file name. REQUIRED without param -w                      |
+| -h          | Lambda function handler name. Default is "handler"                           |
+| -p          | Read the AWS profile of the file.                                            |
+| -r          | Sets the AWS region, defaults to us-east-1.                                  |
+| -t          | Sets lambda timeout. default: 3                                              |
+| -w          | Starts lambda-local in watch mode listening to the specified port [1-65535]. |
 
 
 ### CLI Examples
